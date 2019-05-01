@@ -23,8 +23,9 @@ public class Controller implements ActionListener {
 	
 	public void malen() {
 		System.out.println("Malen modus gewählt");
+		openPopupMenu();
 	}
-	
+
 	public void changeSpeed() {
 		System.out.println("Geschwindigkeit geändert auf: " + e.getActionCommand());
 	}
@@ -50,6 +51,14 @@ public class Controller implements ActionListener {
 	}
 	
 	public void zerstörer() {
+		
+	}
+	
+	public void warningWindow() {
+		JOptionPane.showMessageDialog(frame, "Die Textfelder dürfen nur mit Nummern bestückt sein", "Ungültige Eingabe", JOptionPane.WARNING_MESSAGE);
+	}
+
+	private void openPopupMenu() {
 		
 	}
 	
