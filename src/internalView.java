@@ -62,6 +62,7 @@ public class internalView extends JInternalFrame {
 				new gameView(Integer.parseInt(textFieldList.get(0).getText()), Integer.parseInt(textFieldList.get(1).getText()), controller);
 				} catch(Exception ex) {
 					controller.warningWindow();
+					ex.printStackTrace();
 				}
 			}
 		});

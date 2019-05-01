@@ -1,16 +1,29 @@
 
 import java.awt.event.*;
 import java.lang.reflect.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 
 public class Controller implements ActionListener {
 
 	private ActionEvent e;
+	private String mode;
 	public JFrame frame;
+	public ArrayList<JFrame> frameGroup;
+	private boolean frameGrouped;
+	private boolean run;
+	private boolean set;
+	private boolean paint;
 	
-	public Controller(JFrame frame) {
-		this.frame = frame;
+	public Controller() {
+		this.frameGroup = new ArrayList<JFrame>();
+		this.mode = "setzen";
+		this.frameGrouped = false;
+		this.run = false;
+		this.set = true;
+		this.paint = false;
 	}
 	
 	public void laufen() {
@@ -23,7 +36,6 @@ public class Controller implements ActionListener {
 	
 	public void malen() {
 		System.out.println("Malen modus gewählt");
-		openPopupMenu();
 	}
 
 	public void changeSpeed() {
@@ -35,16 +47,21 @@ public class Controller implements ActionListener {
 	}
 	
 	public void kopieren() {
-		
-	}
+		frameGrouped = true;
+		new gameView(frame, this);
+	} 
 	
-	public void drehen() {
+	public void farbe() {
 		
 	}
 	
 	public void beenden() {
-		frame.dispose();
-	}
+		if(frameGrouped) {
+			for(JFrame frame: frameGroup) {
+				frame.dispose();
+			}
+		}
+	} 
 	
 	public void gleiter() {
 		
@@ -57,9 +74,40 @@ public class Controller implements ActionListener {
 	public void warningWindow() {
 		JOptionPane.showMessageDialog(frame, "Die Textfelder dürfen nur mit Nummern bestückt sein", "Ungültige Eingabe", JOptionPane.WARNING_MESSAGE);
 	}
-
-	private void openPopupMenu() {
+	/**
+	private JFrame openPopupMenu() {
 		
+		JFrame colorChooser = new JFrame();
+		System.out.println(colorChooser.getParent());
+		colorChooser.setSize(200, 200);
+		colorChooser.setLocationRelativeTo(frame);
+		
+		return colorChooser;
+	} */
+	
+	private String setMode(String mode) {
+		switch(mode) {
+			case "laufen":
+				run = true;
+				set = false;
+				paint = false;
+				break;
+			case "setzen":
+				run = false;
+				set = true;
+				paint = false;
+				break;
+			case "malen":
+				run = false;
+				set = false;
+				paint = true;
+				break;
+			default:
+				break;
+		}
+		
+		
+		return mode;
 	}
 	
 	private String replaceString(String string) {
@@ -70,17 +118,23 @@ public class Controller implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-			this.e = e;
-			String command = replaceString(e.getActionCommand());
-			Method method;
-			
-			try {
-				method = this.getClass().getMethod(command);
-				method.invoke(this);
-			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-				System.out.println(ex);
-			}
-		
+		this.e = e;
+		String command = replaceString(e.getActionCommand());
+		Method method;
+		if(command.equals("laufen") || command.equals("setzen") || command.equals("malen")) {
+			this.mode = setMode(command);
+		}
+		try {
+			method = this.getClass().getMethod(command);
+			method.invoke(this);
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+			System.out.println(ex);
+			ex.printStackTrace();
+		}
+	}
+
+	public void addFrameToList(JFrame frame) {
+		frameGroup.add(frame);
 		
 	}
 }

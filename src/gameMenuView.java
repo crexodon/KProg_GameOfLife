@@ -4,10 +4,11 @@ import javax.swing.*;
 
 	//Größe, Farbe, Orientierung, Geschwindigkeit,
 	//Modi: Laufen (Spiel läuft in gewählter geschwindigkeit)
-	//		Malen (Ändern der Farben per Popup-Menü [RGB-Wähler])
+	//		Malen (Lebendig werden der Zellen bei überstreichen der Maus)
 	// 		Setzen (Spiel stoppt und Zustände können geändert werden)
 	//Neue sicht auf selbes Spiel oder neu erzeugte eigenständige Kopie dessen
 	//Figuren erzeugen (beispiel Gleiter [siehe internet])
+	//Farbe via Popup-Menü änderbar (Lebendige und Tote zellen)
 	//Alle sichten des selben Spiels geschlossen, sollen diese dann keine Rechenzeit mehr verbrauchen
 
 @SuppressWarnings("serial")
@@ -47,7 +48,7 @@ public class gameMenuView extends JMenuBar {
 			{
 				{"Laufen", "Setzen", "Malen"}, 
 				{"200%", "150%","125%", "100%", "75%", "50%", "25%"},
-				{"Erstellen", "Kopieren", "Drehen", "Beenden"},
+				{"Erstellen", "Kopieren","Farbe", "Beenden"},
 				{"Gleiter", "Zerstörer"}
 			};
 		
