@@ -4,18 +4,19 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class View extends JFrame {
 	
+	protected Controller controller;
 	private internalView internalFrameView;
 	private JDesktopPane deskPane;
 
 	public View() {
 		
 		initMainView();
-
-		internalFrameView = new internalView(this);
+		this.controller = new Controller(this);
+		internalFrameView = new internalView(this, controller);
 		this.add(internalFrameView);
 	}
 	
-	private void initMainView() {
+	public void initMainView() {
 		
 		this.deskPane = new JDesktopPane();
 		this.deskPane.setDesktopManager(new DefaultDesktopManager());
@@ -24,7 +25,7 @@ public class View extends JFrame {
 		this.setSize(700, 500);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 }

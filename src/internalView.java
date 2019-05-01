@@ -6,13 +6,16 @@ import java.util.*;
 
 @SuppressWarnings("serial")
 public class internalView extends JInternalFrame {
-	private View view;
+	
+	protected Controller controller;
+	protected View view;
 	private JPanel panel;
 	private ArrayList<JTextField> textFieldList = new ArrayList<JTextField>();
 	
-	public internalView(View view) {
+	public internalView(View view, Controller controller) {
 		super("Game Definer", false, true, false, true);
 		this.view = view;
+		this.controller = controller;
 		initInternalView();
 		
 	}
@@ -56,7 +59,7 @@ public class internalView extends JInternalFrame {
 		jButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				try {
-				new gameView(Integer.parseInt(textFieldList.get(0).getText()), Integer.parseInt(textFieldList.get(1).getText()));
+				new gameView(Integer.parseInt(textFieldList.get(0).getText()), Integer.parseInt(textFieldList.get(1).getText()), controller);
 				} catch(Exception ex) {
 					//TODO Warnungs Popup-Fenster bei invalider eingabe
 				}

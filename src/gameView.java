@@ -1,36 +1,39 @@
 import javax.swing.*;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.*;
 
 
 @SuppressWarnings("serial")
-public class gameView extends JFrame{
+public class gameView extends JFrame implements Observer{
 	
+	protected Controller controller;
 	private int col;
 	private int span;
 	private ArrayList<JPanel> panelList = new ArrayList<JPanel>();
+	gameMenuView gameMenu;
+	//protected gameMenuView menuBar;
 	
-	public gameView(int col, int span) {
+	public gameView(int col, int span, Controller controller) {
+		
+		this.controller = controller;
+		controller.frame = this;
 		this.col = col;
 		this.span = span;
-		
 		this.setTitle("Game of Life");
-		this.setSize(500, 300);
+		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.gameMenu = new gameMenuView(this, controller);
 		initPanelLayout();
 		
 	}
 
-
 	private void initPanelLayout() {
 		this.setLayout(new GridLayout(col, span));
-		System.out.println(col*span);
 		for(int i = 0; i < col*span; i++) {
 			Color color = new Color((int)(Math.random()*255)+1,(int)(Math.random()*255)+1,(int)(Math.random()*255)+1);
 			JPanel panel = new JPanel();
@@ -66,10 +69,15 @@ public class gameView extends JFrame{
 					
 				}
 			});
-			this.add(panel);
 			panelList.add(panel);
+			this.add(panel);
 		}
-		System.out.println(panelList.size());
+		
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
 		
 	}
 	

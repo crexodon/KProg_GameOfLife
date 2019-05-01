@@ -1,8 +1,10 @@
+import java.util.Observable;
 
-
-public class Model {
+public class Model extends Observable {
 	
-	public static void main(String[]args) {
+	Controller controller;
+	
+	public static void main(String[]args) {	
 		
 		View mainView = new View();
 		
