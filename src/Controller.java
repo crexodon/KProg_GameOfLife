@@ -1,26 +1,25 @@
 
 import java.awt.event.*;
+import java.util.*;
 import java.lang.reflect.*;
-import java.util.ArrayList;
-
+import java.util.HashMap;
 import javax.swing.*;
-
 
 public class Controller implements ActionListener {
 
 	private ActionEvent e;
 	private String mode;
-	public JFrame frame;
+	public gameView gameView;
+	public JInternalFrame frame;
+	private View view;
 	public ArrayList<JFrame> frameGroup;
-	private boolean frameGrouped;
 	private boolean run;
 	private boolean set;
 	private boolean paint;
 	
 	public Controller() {
-		this.frameGroup = new ArrayList<JFrame>();
+		this.frameGroup = new ArrayList<>();
 		this.mode = "setzen";
-		this.frameGrouped = false;
 		this.run = false;
 		this.set = true;
 		this.paint = false;
@@ -47,8 +46,8 @@ public class Controller implements ActionListener {
 	}
 	
 	public void kopieren() {
-		frameGrouped = true;
-		new gameView(frame, this);
+		System.out.println(frameGroup.size());
+		new gameView(gameView, gameView.col, gameView.span);
 	} 
 	
 	public void farbe() {
@@ -56,11 +55,10 @@ public class Controller implements ActionListener {
 	}
 	
 	public void beenden() {
-		if(frameGrouped) {
-			for(JFrame frame: frameGroup) {
-				frame.dispose();
-			}
+		for(JFrame frame : frameGroup) {
+			frame.dispose();
 		}
+		
 	} 
 	
 	public void gleiter() {
@@ -110,14 +108,20 @@ public class Controller implements ActionListener {
 		return mode;
 	}
 	
-	private String replaceString(String string) {
+	public String replaceString(String string) {
 		string = string.replaceAll("[0-9]+%", "changeSpeed");
 		return string;
+	}
+	
+	public int getNumberOfString(String string) {
+		int number;
+		number = Integer.parseInt(string.replaceAll("[a-zA-Z]", "").trim());
+		
+		return number;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 		this.e = e;
 		String command = replaceString(e.getActionCommand());
 		Method method;
@@ -131,10 +135,5 @@ public class Controller implements ActionListener {
 			System.out.println(ex);
 			ex.printStackTrace();
 		}
-	}
-
-	public void addFrameToList(JFrame frame) {
-		frameGroup.add(frame);
-		
 	}
 }

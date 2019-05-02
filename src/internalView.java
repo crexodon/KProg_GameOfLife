@@ -11,9 +11,11 @@ public class internalView extends JInternalFrame {
 	protected View view;
 	private JPanel panel;
 	private ArrayList<JTextField> textFieldList = new ArrayList<JTextField>();
+	private int gameCounter;
 	
 	public internalView(View view, Controller controller) {
 		super("Game Definer", false, true, false, true);
+		controller.frame = this;
 		this.view = view;
 		this.controller = controller;
 		initInternalView();
@@ -59,9 +61,11 @@ public class internalView extends JInternalFrame {
 		jButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				try {
-				new gameView(Integer.parseInt(textFieldList.get(0).getText()), Integer.parseInt(textFieldList.get(1).getText()), controller);
+					gameCounter++;
+					new gameView(Integer.parseInt(textFieldList.get(0).getText()), Integer.parseInt(textFieldList.get(1).getText()), gameCounter);
 				} catch(Exception ex) {
 					controller.warningWindow();
+					gameCounter--;
 					ex.printStackTrace();
 				}
 			}

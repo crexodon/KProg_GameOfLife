@@ -7,20 +7,20 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class gameView extends JFrame implements Observer{
 	
-	protected Controller controller;
-	private int col;
-	private int span;
+	private Controller controller;
+	public int col;
+	public int span;
 	private ArrayList<JPanel> panelList = new ArrayList<JPanel>();
 	gameMenuView gameMenu;
 	
-	public gameView(int col, int span, Controller controller) {
-		
-		this.controller = controller;
-		controller.frame = this;
+	public gameView(int col, int span, int titleNumber) {
+		this.controller = new Controller();
+		controller.gameView = this;
 		controller.frameGroup.add(this);
+		System.out.println("frameGroup.size: " + controller.frameGroup.size());
 		this.col = col;
 		this.span = span;
-		this.setTitle("Game of Life");
+		this.setTitle("Game of Life " + titleNumber);
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -31,11 +31,19 @@ public class gameView extends JFrame implements Observer{
 		
 	}
 	
-	public gameView(JFrame parentFrame, Controller controller) {
-		System.out.println("bin hier angekommen");
-		this.controller = controller;
+	public gameView(gameView parentView, int col, int span) {
+		this.controller =  parentView.controller;
 		controller.frameGroup.add(this);
-		
+		this.col = col;
+		this.span = span;
+		this.setTitle(parentView.getTitle() + " copy");
+		this.setSize(500, 500);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+		this.setResizable(true);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.gameMenu = new gameMenuView(this, controller);
+		initPanelLayout();
 	} 
 
 	private void initPanelLayout() {
@@ -84,5 +92,7 @@ public class gameView extends JFrame implements Observer{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 	
 }

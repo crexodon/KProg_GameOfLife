@@ -49,7 +49,7 @@ public class gameMenuView extends JMenuBar {
 				{"Laufen", "Setzen", "Malen"}, 
 				{"200%", "150%","125%", "100%", "75%", "50%", "25%"},
 				{"Erstellen", "Kopieren","Farbe", "Beenden"},
-				{"Gleiter", "Zerstörer"}
+				{"Gleiter", "Zerstörer", "Ersteller"}
 			};
 		
 		

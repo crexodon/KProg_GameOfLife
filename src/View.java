@@ -11,7 +11,7 @@ public class View extends JFrame {
 	public View() {
 		
 		initMainView();
-		this.controller = new Controller(this);
+		this.controller = new Controller();
 		internalFrameView = new internalView(this, controller);
 		this.add(internalFrameView);
 	}
