@@ -85,6 +85,8 @@ public class Logic extends JFrame{
                 } else { //if nothing happened cells stay the same
                     futureState[i][j] = currentState[i][j];
                 }
+
+
             }
         }
         //change colors for the next generation
