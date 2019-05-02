@@ -2,7 +2,6 @@
 import java.awt.event.*;
 import java.util.*;
 import java.lang.reflect.*;
-import java.util.HashMap;
 import javax.swing.*;
 
 public class Controller implements ActionListener {
@@ -46,8 +45,7 @@ public class Controller implements ActionListener {
 	}
 	
 	public void kopieren() {
-		System.out.println(frameGroup.size());
-		new gameView(gameView, gameView.col, gameView.span);
+		new gameView(gameView);
 	} 
 	
 	public void farbe() {
@@ -103,8 +101,6 @@ public class Controller implements ActionListener {
 			default:
 				break;
 		}
-		
-		
 		return mode;
 	}
 	
@@ -112,23 +108,16 @@ public class Controller implements ActionListener {
 		string = string.replaceAll("[0-9]+%", "changeSpeed");
 		return string;
 	}
-	
-	public int getNumberOfString(String string) {
-		int number;
-		number = Integer.parseInt(string.replaceAll("[a-zA-Z]", "").trim());
-		
-		return number;
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.e = e;
 		String command = replaceString(e.getActionCommand());
 		Method method;
-		if(command.equals("laufen") || command.equals("setzen") || command.equals("malen")) {
-			this.mode = setMode(command);
-		}
 		try {
+			if(command.equals("laufen") || command.equals("setzen") || command.equals("malen")) {
+				this.mode = setMode(command);
+			}
 			method = this.getClass().getMethod(command);
 			method.invoke(this);
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
