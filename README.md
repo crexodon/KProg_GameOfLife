@@ -2,6 +2,6 @@
 Java implementation of the famous Game of Life
 
 ## TODO
-- [ ] create GUI
-- [ ] make model
+- [x] create GUI
+- [x] make model
 - [ ] do things
