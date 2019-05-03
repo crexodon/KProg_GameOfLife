@@ -10,7 +10,7 @@ public class gameView extends JFrame{
 	private Controller controller;
 	public int col;
 	public int span;
-	private ArrayList<JPanel> panelList = new ArrayList<JPanel>();
+	JPanel[][] gamePanels;
 	gameMenuView gameMenu;
 	
 	public gameView(int col, int span, int titleNumber) {
@@ -46,15 +46,7 @@ public class gameView extends JFrame{
 	} 
 
 	private void initPanelLayout() {
-		this.setLayout(new GridLayout(col, span));
-		for(int i = 0; i < col*span; i++) {
-			Color color = new Color((int)(Math.random()*255)+1,(int)(Math.random()*255)+1,(int)(Math.random()*255)+1);
-			JPanel panel = new JPanel();
-			panel.setBackground(color);
-			/**panel.addMouseListener(new MouseListener() */
-			panelList.add(panel);
-			this.add(panel);
-		}
+
 		
 	}
 }

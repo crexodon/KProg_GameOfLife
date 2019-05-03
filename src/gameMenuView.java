@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 
 	//Gr��e, Farbe, Orientierung, Geschwindigkeit,
