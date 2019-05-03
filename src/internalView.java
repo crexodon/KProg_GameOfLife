@@ -26,7 +26,7 @@ public class internalView extends JInternalFrame {
 		panel = new JPanel();
 		this.setSize(200,200);
 		this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
-		this.setLocation(250,100);
+		this.setLocation(view.getWidth()/2-this.getWidth()/2,view.getHeight()/2-this.getHeight()/2);
 		this.setLayout(new GridLayout(3,1));
 		this.setVisible(true);
 		panel.setBackground(Color.black);
@@ -62,7 +62,7 @@ public class internalView extends JInternalFrame {
 			public void actionPerformed(ActionEvent e){
 				try {
 					gameCounter++;
-					new gameView(Integer.parseInt(textFieldList.get(0).getText()), Integer.parseInt(textFieldList.get(1).getText()), gameCounter);
+					view.add(new gameView(Integer.parseInt(textFieldList.get(0).getText()), Integer.parseInt(textFieldList.get(1).getText()), gameCounter));
 				} catch(Exception ex) {
 					controller.warningWindow();
 					gameCounter--;

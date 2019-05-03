@@ -22,7 +22,7 @@ public class View extends JFrame {
 		this.deskPane.setDesktopManager(new DefaultDesktopManager());
 		this.setContentPane(deskPane);
 		this.setTitle("Game of Life");
-		this.setSize(700, 500);
+		this.setSize(800, 600);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
