@@ -62,7 +62,7 @@ public class internalView extends JInternalFrame {
 			public void actionPerformed(ActionEvent e){
 				try {
 					gameCounter++;
-					view.add(new gameView(Integer.parseInt(textFieldList.get(0).getText()), Integer.parseInt(textFieldList.get(1).getText()), gameCounter));
+					new gameView(Integer.parseInt(textFieldList.get(0).getText()), Integer.parseInt(textFieldList.get(1).getText()), gameCounter);
 				} catch(Exception ex) {
 					controller.warningWindow();
 					gameCounter--;

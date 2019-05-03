@@ -25,6 +25,7 @@ public class Controller implements ActionListener {
 	
 	public void laufen() {
 		System.out.println("Laufen modus gew�hlt");
+		Model.evolveGeneration();
 	}
 	
 	public void setzen() {
