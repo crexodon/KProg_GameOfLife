@@ -7,9 +7,9 @@ public class Logic extends JFrame{
 
     public static void main(String[] args){
         int[][] state = {
+                {0,1,0,0,0,0,0,0,0,0,0,0},
                 {0,0,1,0,0,0,0,0,0,0,0,0},
-                {0,0,0,1,0,0,0,0,0,0,0,0},
-                {0,1,1,1,0,0,0,0,0,0,0,0},
+                {1,1,1,0,0,0,0,0,0,0,0,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0},
@@ -63,50 +63,73 @@ public class Logic extends JFrame{
     public void nextGeneration(int state[][], int row, int col){
         int futureState[][] = new int[row][col];
         //iterate through every cell
-        for(int i = 1; i < row -1; i++){
-            for(int j = 1; j < col -1; j++){
-                //check for number of neighbour cells that are alive
-                int aliveNeighbours = 0;
-                for(int k = -1; k <= 1; k++){
-                    for(int l = -1; l <= 1; l++){
-                        aliveNeighbours += currentState[i + k][j + l];
-                    }
-                }
-                //subtract the checked cell from neighbour cells
-                aliveNeighbours -= currentState[i][j];
+       for(int r = 0; r < row; r++){
+           for(int c = 0; c < col; c++){
+               //check for neighbours
+               int neighbours = 0;
+               if(currentState[wrapIndex(row, r-1)][wrapIndex(col, c+1)] == 1){ //top left
+                   neighbours++;
+               }if(currentState[wrapIndex(row, r)][wrapIndex(col, c+1)] == 1){ //top middle
+                   neighbours++;
+               }if(currentState[wrapIndex(row, r+1)][wrapIndex(col, c+1)] == 1){ //top right
+                   neighbours++;
+               }if(currentState[wrapIndex(row, r-1)][wrapIndex(col, c)] == 1){ //middle left
+                   neighbours++;
+               }if(currentState[wrapIndex(row, r+1)][wrapIndex(col, c)] == 1){ //middle right
+                   neighbours++;
+               }if(currentState[wrapIndex(row, r-1)][wrapIndex(col, c-1)] == 1){ //bottom left
+                   neighbours++;
+               }if(currentState[wrapIndex(row, r)][wrapIndex(col, c-1)] == 1){ //bottom middle
+                   neighbours++;
+               }if(currentState[wrapIndex(row, r+1)][wrapIndex(col, c-1)] == 1){ //bottom right
+                   neighbours++;
+               }
+               //System.out.println(r+"/"+c+": "+neighbours);
 
-                //rules of game of life
-                if((aliveNeighbours > 3) || (aliveNeighbours < 2)){ //if cell is over or underpopulated it dies
-                    futureState[i][j] = 0;
-                } else if((currentState[i][j] == 1) && ((aliveNeighbours == 2) || (aliveNeighbours == 3))){ //if cell is okay it will live on
-                    futureState[i][j] = 1;
-                } else if((currentState[i][j] == 0) && (aliveNeighbours == 3)){ //new cell is born if it has 3 neighbours
-                    futureState[i][j] = 1;
-                } else { //if nothing happened cells stay the same
-                    futureState[i][j] = currentState[i][j];
-                }
+               //game of life rules
+               if((neighbours > 3) || (neighbours < 2)){ //if cell is over or underpopulated it dies
+                   futureState[r][c] = 0;
+                   //System.out.println(r+"/"+c+"dies");
+               }else if(currentState[r][c] == 1 && ((neighbours == 2) || neighbours ==3)){ //if cell is okay it survives
+                   futureState[r][c] = 1;
+                   //System.out.println(r+"/"+c+"survives");
+               }else if((currentState[c][r] == 0) && (neighbours == 3)){ //if dead cell has 3 neighbours it is born
+                   futureState[r][c] = 1;
+                   //System.out.println(r+"/"+c+"born");
+               }else{ //else current state stays the same
+                   futureState[r][c] = currentState[r][c];
+               }
+           }
+       }
+       //change colors
+       for(int r = 0; r < row; r++){
+           for(int c = 0; c < col; c++){
+               if(futureState[r][c] == 1){
+                   panels[r][c].setBackground(Color.RED);
+               }else{
+                   panels[r][c].setBackground(Color.GRAY);
+               }
+           }
+       }
+       currentState = futureState; //store future generation in current generation
+    }
 
-
-            }
+    private int wrapIndex(int length, int pos){
+        int index;
+        if(pos < 0){
+            index = (pos + length) % length;
+        } else if(pos == 0){
+            index = 0;
+        } else {
+            index = pos % length;
         }
-        //change colors for the next generation
-        for(int i = 0; i < row; i++){
-            for(int j = 0; j < cols; j++){
-                if(futureState[i][j] == 0){
-                    panels[i][j].setBackground(Color.GRAY);
-                } else{
-                    panels[i][j].setBackground(Color.RED);
-                }
-            }
-        }
-        //store future generation in current generation
-        currentState = futureState;
+        return index;
     }
 
     public void evolveGeneration(){
-        for(int i = 0; i <= 32; i++){
+        for(int i = 0; i <= 64; i++){
             try{
-                Thread.sleep(500);
+                Thread.sleep(1000);
                 nextGeneration(currentState,rows,cols);
             } catch (InterruptedException e){
                 e.printStackTrace();
