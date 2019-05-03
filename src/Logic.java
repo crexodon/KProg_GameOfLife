@@ -61,42 +61,41 @@ public class Logic extends JFrame{
     public void nextGeneration(int state[][], int row, int col){
         int futureState[][] = new int[row][col];
         //iterate through every cell
-       for(int r = 0; r < row; r++){
-           for(int c = 0; c < col; c++){
+       for(int c = 0; c < col; c++){
+           for(int r = 0; r < row; r++){
                //check for neighbours
                int neighbours = 0;
-               if(currentState[wrapIndex(row, r-1)][wrapIndex(col, c+1)] == 1){ //top left
+               if(state[wrapIndex(col, c-1)][wrapIndex(row, r-1)] == 1){ //top left
                    neighbours++;
-               }if(currentState[wrapIndex(row, r)][wrapIndex(col, c+1)] == 1){ //top middle
+               }if(state[wrapIndex(col, c-1)][wrapIndex(row, r)] == 1){ //top middle
                    neighbours++;
-               }if(currentState[wrapIndex(row, r+1)][wrapIndex(col, c+1)] == 1){ //top right
+               }if(state[wrapIndex(col, c-1)][wrapIndex(row, r+1)] == 1){ //top right
                    neighbours++;
-               }if(currentState[wrapIndex(row, r-1)][wrapIndex(col, c)] == 1){ //middle left
+               }if(state[wrapIndex(col, c)][wrapIndex(row, r-1)] == 1){ //middle left
                    neighbours++;
-               }if(currentState[wrapIndex(row, r+1)][wrapIndex(col, c)] == 1){ //middle right
+               }if(state[wrapIndex(col, c)][wrapIndex(row, r+1)] == 1){ //middle right
                    neighbours++;
-               }if(currentState[wrapIndex(row, r-1)][wrapIndex(col, c-1)] == 1){ //bottom left
+               }if(state[wrapIndex(col, c+1)][wrapIndex(row, r-1)] == 1){ //bottom left
                    neighbours++;
-               }if(currentState[wrapIndex(row, r)][wrapIndex(col, c-1)] == 1){ //bottom middle
+               }if(state[wrapIndex(col, c+1)][wrapIndex(row, r)] == 1){ //bottom middle
                    neighbours++;
-               }if(currentState[wrapIndex(row, r+1)][wrapIndex(col, c-1)] == 1){ //bottom right
+               }if(state[wrapIndex(col, c+1)][wrapIndex(row, r+1)] == 1){ //bottom right
                    neighbours++;
                }
+
                //System.out.println(r+"/"+c+": "+neighbours);
 
                //game of life rules
-               if((neighbours > 3) || (neighbours < 2)){ //if cell is over or underpopulated it dies
-                   futureState[r][c] = 0;
-                   //System.out.println(r+"/"+c+"dies");
-               }else if(currentState[r][c] == 1 && ((neighbours == 2) || neighbours ==3)){ //if cell is okay it survives
-                   futureState[r][c] = 1;
-                   //System.out.println(r+"/"+c+"survives");
-               }else if((currentState[c][r] == 0) && (neighbours == 3)){ //if dead cell has 3 neighbours it is born
-                   futureState[r][c] = 1;
-                   //System.out.println(r+"/"+c+"born");
-               }else{ //else current state stays the same
-                   futureState[r][c] = currentState[r][c];
+               if(state[c][r] == 1 && neighbours < 2){
+                   futureState[c][r] = 0;
+               }else if(state[c][r] == 1 && neighbours > 3){
+                   futureState[c][r] = 0;
+               }else if(state[c][r] == 0 && neighbours == 3){
+                   futureState[c][r] = 1;
+               }else{
+                   futureState[c][r] = state[c][r];
                }
+               //System.out.println("---" + c + "/" + r);
            }
        }
        //change colors
@@ -121,13 +120,14 @@ public class Logic extends JFrame{
         } else {
             index = pos % length;
         }
+        //System.out.println(pos + " " + index);
         return index;
     }
 
     public void evolveGeneration(){
-        for(int i = 0; i <= 64; i++){
+        for(int i = 0; i <= 500; i++){
             try{
-                Thread.sleep(1000);
+                Thread.sleep(700);
                 nextGeneration(currentState,rows,cols);
             } catch (InterruptedException e){
                 e.printStackTrace();
@@ -135,5 +135,3 @@ public class Logic extends JFrame{
         }
     }
 }
-
-//TODO create edge case detection
