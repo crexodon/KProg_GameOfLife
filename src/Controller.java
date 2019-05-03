@@ -1,4 +1,3 @@
-
 import java.awt.event.*;
 import java.util.*;
 import java.lang.reflect.*;
@@ -11,7 +10,7 @@ public class Controller implements ActionListener {
 	public gameView gameView;
 	public JInternalFrame frame;
 	private View view;
-	public ArrayList<JInternalFrame> frameGroup;
+	public ArrayList<JFrame> frameGroup;
 	private boolean run;
 	private boolean set;
 	private boolean paint;
@@ -25,19 +24,19 @@ public class Controller implements ActionListener {
 	}
 	
 	public void laufen() {
-		System.out.println("Laufen modus gewählt");
+		System.out.println("Laufen modus gewï¿½hlt");
 	}
 	
 	public void setzen() {
-		System.out.println("Setzen Modus gewählt");
+		System.out.println("Setzen Modus gewï¿½hlt");
 	}
 	
 	public void malen() {
-		System.out.println("Malen modus gewählt");
+		System.out.println("Malen modus gewï¿½hlt");
 	}
 
 	public void changeSpeed() {
-		System.out.println("Geschwindigkeit geändert auf: " + e.getActionCommand());
+		System.out.println("Geschwindigkeit geï¿½ndert auf: " + e.getActionCommand());
 	}
 
 	public void erstellen() {
@@ -53,7 +52,7 @@ public class Controller implements ActionListener {
 	}
 	
 	public void beenden() {
-		for(JInternalFrame frame : frameGroup) {
+		for(JFrame frame : frameGroup) {
 			frame.dispose();
 		}
 		
@@ -63,12 +62,12 @@ public class Controller implements ActionListener {
 		
 	}
 	
-	public void zerstörer() {
+	public void zerstoerer() {
 		
 	}
 	
 	public void warningWindow() {
-		JOptionPane.showMessageDialog(frame, "Die Textfelder dürfen nur mit Nummern bestückt sein", "Ungültige Eingabe", JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(frame, "Die Textfelder dï¿½rfen nur mit Nummern bestï¿½ckt sein", "Ungï¿½ltige Eingabe", JOptionPane.WARNING_MESSAGE);
 	}
 	/**
 	private JFrame openPopupMenu() {
