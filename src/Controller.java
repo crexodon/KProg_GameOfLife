@@ -11,7 +11,7 @@ public class Controller implements ActionListener {
 	public gameView gameView;
 	public JInternalFrame frame;
 	private View view;
-	public ArrayList<JFrame> frameGroup;
+	public ArrayList<JInternalFrame> frameGroup;
 	private boolean run;
 	private boolean set;
 	private boolean paint;
@@ -53,7 +53,7 @@ public class Controller implements ActionListener {
 	}
 	
 	public void beenden() {
-		for(JFrame frame : frameGroup) {
+		for(JInternalFrame frame : frameGroup) {
 			frame.dispose();
 		}
 		

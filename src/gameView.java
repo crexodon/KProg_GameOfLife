@@ -5,7 +5,7 @@ import java.util.*;
 
 
 @SuppressWarnings("serial")
-public class gameView extends JFrame{
+public class gameView extends JInternalFrame{
 	
 	private Controller controller;
 	public int col;
@@ -14,14 +14,13 @@ public class gameView extends JFrame{
 	gameMenuView gameMenu;
 	
 	public gameView(int col, int span, int titleNumber) {
+		super("Game of Life " + titleNumber, false, true, false, true);
 		this.controller = new Controller();
 		controller.gameView = this;
 		controller.frameGroup.add(this);
 		this.col = col;
 		this.span = span;
-		this.setTitle("Game of Life " + titleNumber);
-		this.setSize(500, 500);
-		this.setLocationRelativeTo(null);
+		this.setSize(250, 250);
 		this.setVisible(true);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -31,13 +30,13 @@ public class gameView extends JFrame{
 	}
 	
 	public gameView(gameView parentView) {
+		super(parentView.getTitle() + " copy", false, true, false, true);
 		this.controller =  parentView.controller;
 		controller.frameGroup.add(this);
 		this.col = parentView.col;
 		this.span = parentView.span;
 		this.setTitle(parentView.getTitle() + " copy");
 		this.setSize(parentView.getWidth(), parentView.getHeight());
-		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
